@@ -1,9 +1,9 @@
 package solapi
 
 import (
-	"github.com/solapi/solapi-go/cash"
-	"github.com/solapi/solapi-go/messages"
-	"github.com/solapi/solapi-go/storage"
+	"github.com/moon-planet/solapi-go/cash"
+	"github.com/moon-planet/solapi-go/messages"
+	"github.com/moon-planet/solapi-go/storage"
 )
 
 // Client struct

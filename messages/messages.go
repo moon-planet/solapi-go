@@ -3,8 +3,8 @@ package messages
 import (
 	"fmt"
 
-	"github.com/solapi/solapi-go/apirequest"
-	"github.com/solapi/solapi-go/types"
+	"github.com/moon-planet/solapi-go/apirequest"
+	"github.com/moon-planet/solapi-go/types"
 )
 
 // Messages struct

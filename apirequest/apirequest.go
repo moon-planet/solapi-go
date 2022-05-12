@@ -9,15 +9,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 	"runtime"
 	"time"
 
-	"github.com/solapi/solapi-go/types"
+	"github.com/moon-planet/solapi-go/types"
 )
 
 const sdkVersion string = "GO-SDK v1.0"
@@ -55,47 +52,6 @@ func RandomString(n int) string {
 	return hex.EncodeToString(b)
 }
 
-// Exists file check
-func exists(path string) (bool, error) {
-	_, err := os.Stat(path)
-	if err == nil {
-		return true, nil
-	}
-	if os.IsNotExist(err) {
-		return false, nil
-	}
-	return false, err
-}
-
-// Get config file path
-func getConfigFilePath() string {
-	pathList := [5]string{
-		"config.json",
-		"../config.json",
-		"../../config.json",
-		"../../../config.json",
-		"../../../../config.json",
-	}
-
-	_, b, _, _ := runtime.Caller(0)
-	filePath := filepath.Dir(b)
-	filePath = filepath.Join(filePath, "../config.json")
-
-	path, err := os.Getwd()
-	if err == nil {
-		for _, configPath := range pathList {
-			processFilePath := filepath.Join(path, configPath)
-			exist, _ := exists(processFilePath)
-			if exist == true {
-				filePath = processFilePath
-				break
-			}
-		}
-	}
-
-	return filePath
-}
-
 // NewAPIRequest create
 func NewAPIRequest() *APIRequest {
 	goos := runtime.GOOS
@@ -104,20 +60,12 @@ func NewAPIRequest() *APIRequest {
 
 	request := APIRequest{response: "", statusCode: "", OsPlatform: osPlatform, SdkVersion: sdkVersion}
 
-	// Read File
-	filePath := getConfigFilePath()
-	file, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		log.Fatalln("Error reading")
-		return &request
-	}
-
-	err = json.Unmarshal(file, &request)
-	fmt.Println(request)
-	if err != nil {
-		log.Fatalln("Error file Unmarshal")
-		return &request
-	}
+	request.APIKey = os.Getenv("SOLAPI_API_KEY")
+	request.APISecret = os.Getenv("SOLAPI_API_SECRET")
+	request.Protocol = os.Getenv("SOLAPI_PROTOCOL")
+	request.Domain = os.Getenv("SOLAPI_DOMAIN")
+	request.Prefix = os.Getenv("SOLAPI_PREFIX")
+	request.AppId = os.Getenv("SOLAPI_APP_ID")
 
 	return &request
 }
