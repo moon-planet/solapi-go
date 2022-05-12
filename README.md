@@ -46,12 +46,11 @@ go get github.com/solapi/solapi-go
 ## Configs
 
 ```
-{
-  "APIKey": "NCSVYGF1IK5PUKDA",
-  "APISecret": "FSD4ER2WYPZQVDBPKMLOZVAWTGYBDTRW",
-  "Protocol": "https",
-  "Domain": "api.solapi.com",
-  "Prefix": "",
-  "AppId": "" // 이곳에 앱 아이디 입력 시 그룹 생성, 메시지 발송 시 추가로 입력할 필요 없습니다.
-}
+> OS의 환경설정 기반으로 값을 가져옵니다.
+SOLAPI_API_KEY=
+SOLAPI_API_SECRET=
+SOLAPI_PROTOCOL=https
+SOLAPI_DOMAIN=api.solapi.com
+SOLAPI_PREFIX=
+SOLAPI_APP_ID=
 ```
