@@ -5,6 +5,7 @@ import (
 	"crypto/hmac"
 	cr "crypto/rand"
 	"crypto/sha256"
+	"crypto/tls"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -110,7 +111,8 @@ func (a *APIRequest) GetAuthorization() string {
 // GET method request
 func (a *APIRequest) GET(resource string, params map[string]string, customStruct interface{}) error {
 	// Prepare for Http Request
-	client := &http.Client{}
+	tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
+	client := &http.Client{Transport: tr}
 	url := fmt.Sprintf("%s://%s/%s%s", a.Protocol, a.Domain, a.Prefix, resource)
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -162,7 +164,8 @@ func (a *APIRequest) Request(method string, resource string, params interface{},
 	}
 
 	// Prepare for Http Request
-	client := &http.Client{}
+	tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
+	client := &http.Client{Transport: tr}
 	url := fmt.Sprintf("%s://%s/%s%s", a.Protocol, a.Domain, a.Prefix, resource)
 	req, _ := http.NewRequest(method, url, bytes.NewBuffer(jsonString))
 
